@@ -20,7 +20,10 @@ export const fetchDataFromAPI = async (resource, query) => {
     ...queryParams,
   };
   urlWithParams.search = new URLSearchParams(newQueryParams).toString();
-
-  const { data } = await fetch(urlWithParams.toString(), options);
+  const response = await fetch(urlWithParams.toString(), options);
+  if (!response.ok) {
+    throw new Error("Couldn't fetch data.");
+  }
+  const data = await response.json();
   return data;
 };
