@@ -15,9 +15,17 @@ export const AppContext = (props) => {
 
   const fetchSelectedCategories = async (query) => {
     setLoading(true);
-    const data = await fetchDataFromAPI("search", query);
-    setSearchResults(data);
+    const { contents } = await fetchDataFromAPI("search", query);
+    setSearchResults(contents);
     setLoading(false);
+  };
+
+  const updateMobileMenu = () => {
+    setMobileMenu((prevMobileMenu) => !prevMobileMenu);
+  };
+
+  const updateSelectCategories = (category) => {
+    setSelectCategories(category);
   };
 
   return (
@@ -28,9 +36,9 @@ export const AppContext = (props) => {
         searchResults,
         setSearchResults,
         selectCategories,
-        setSelectCategories,
+        updateSelectCategories,
         mobileMenu,
-        setMobileMenu,
+        updateMobileMenu,
       }}
     >
       {props.children}
