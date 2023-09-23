@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LeftNavMenuItem from "./LeftNavMenuItem";
@@ -28,7 +28,7 @@ const LeftNav = () => {
       <div className="flex px-5 flex-col">
         {categories.map((category) => {
           return (
-            <>
+            <React.Fragment key={category.name}>
               <LeftNavMenuItem
                 text={category.type === "home" ? "Home" : category.name}
                 icon={category.icon}
@@ -41,7 +41,7 @@ const LeftNav = () => {
                 }`}
               />
               {category.divider && <hr className="my-5 border-white/[0.2]" />}
-            </>
+            </React.Fragment>
           );
         })}
         <hr className="my-5 border-white/[0.2]" />
