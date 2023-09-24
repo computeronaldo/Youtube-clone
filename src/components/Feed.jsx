@@ -5,7 +5,8 @@ import Leftnav from "./LeftNav";
 import VideoCard from "./VideoCard";
 
 const Feed = () => {
-  const { loading, searchResults } = useContext(Context);
+  const { loading, searchResults, reFetchData, selectCategories } =
+    useContext(Context);
 
   useEffect(() => {
     document.getElementById("root").classList.remove("custom-h");
@@ -25,6 +26,19 @@ const Feed = () => {
               );
             })}
         </div>
+        {!loading && !searchResults && (
+          <div className="flex flex-col items-center gap-5 ml-4">
+            <div className="text-white text-3xl">{`Couldn't fetch data for ${selectCategories.toLowerCase()} category.`}</div>
+            <button
+              className="border-2 border-solid text-white rounded-xl px-4 py-2 w-[10%]"
+              onClick={() => {
+                reFetchData();
+              }}
+            >
+              Retry
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

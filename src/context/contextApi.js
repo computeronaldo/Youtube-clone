@@ -15,8 +15,15 @@ export const AppContext = (props) => {
 
   const fetchSelectedCategories = async (query) => {
     setLoading(true);
-    const { contents } = await fetchDataFromAPI("search", query);
-    setSearchResults(contents);
+    try {
+      const { contents } = await fetchDataFromAPI("search", { q: query });
+      if (contents === undefined) {
+        throw new Error("Couldn't fetch data.");
+      }
+      setSearchResults(contents);
+    } catch (err) {
+      console.log(err.message);
+    }
     setLoading(false);
   };
 
@@ -28,17 +35,26 @@ export const AppContext = (props) => {
     setSelectCategories(category);
   };
 
+  const updateLoading = (state) => {
+    setLoading(state);
+  };
+
+  const reFetchData = () => {
+    fetchSelectedCategories(selectCategories);
+  };
+
   return (
     <Context.Provider
       value={{
         loading,
-        setLoading,
+        updateLoading,
         searchResults,
         setSearchResults,
         selectCategories,
         updateSelectCategories,
         mobileMenu,
         updateMobileMenu,
+        reFetchData,
       }}
     >
       {props.children}

@@ -17,13 +17,13 @@ export const fetchDataFromAPI = async (resource, query) => {
   try {
     const urlWithParams = new URL(`${BASE_URL}/${resource}/`);
     const newQueryParams = {
-      q: query,
+      ...query,
       ...queryParams,
     };
     urlWithParams.search = new URLSearchParams(newQueryParams).toString();
     const response = await fetch(urlWithParams.toString(), options);
     if (!response.ok) {
-      throw new Error("Couldn't fetch data.");
+      throw new Error(`Couldn't fetch data for ${query.q} category.`);
     }
     const data = await response.json();
     return data;

@@ -20,7 +20,7 @@ const App = () => {
               path="/searchResult/:searchQuery"
               element={<SearchResult />}
             />
-            <Route path="/video/:id" element={<VideoDetails />} />
+            <Route path="/video/:videoId" element={<VideoDetails />} />
           </Routes>
         </div>
       </BrowserRouter>
